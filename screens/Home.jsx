@@ -27,10 +27,11 @@ const Home = ({navigation}) => {
         .then(() => navigation.navigate('Login'))
     }
     const count = useSelector((state) => state.counter.count)
+    const globalStyle = useSelector((state) => state.style.globalStyle)
     const dispatch = useDispatch()
 
     return (
-        <View style={styles.container}>
+        <View style={globalStyle.container}>
             {/* <ScrollView>
                 <View style={styles.listContainer}>
                 {animes?.map(anime => (
