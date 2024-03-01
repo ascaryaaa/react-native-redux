@@ -5,7 +5,7 @@ import Login from './screens/Login.js';
 import Home from './screens/Home';
 import { Provider } from 'react-redux';
 import store from './reducers';
-import Details from './screens/Details.jsx';
+import Detail from './screens/Detail.jsx';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,10 +32,10 @@ export default function App() {
             }}
           />
           <Stack.Screen 
-            name="Details" 
-            component={Details} 
+            name="Detail" 
+            component={Detail} 
             options={{
-              title:'Details',
+              title:'Detail',
               headerTitleAlign: 'center'
             }}
           />

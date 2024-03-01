@@ -29,17 +29,16 @@ const Home = ({navigation}) => {
     }
     const count = useSelector((state) => state.counter.count)
     const globalStyle = useSelector((state) => state.style.globalStyle)
-    const anime = useSelector((state) => state.anime)
+    const animeState = useSelector((state) => state.anime)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getTopAnime())
     }, [dispatch])
 
-    useEffect(() => { console.log(anime.data.length)}, [anime])
-
     return (
         <View style={globalStyle.container}>
+            <ScrollView>
             {/* <ScrollView>
                 <View style={styles.listContainer}>
                 {animes?.map(anime => (
@@ -56,14 +55,20 @@ const Home = ({navigation}) => {
                 </View>
             </ScrollView> */}
             {
-                anime.loading 
+                animeState.loading 
                 ? <ActivityIndicator/>
-                : anime?.data.map(anime => (
-                    <Image 
-                        style={styles.image}
-                        key={anime.mal_id}
-                        source={{uri: anime.images.jpg.image_url}}
-                    />
+                : animeState?.data?.map(anime => (
+                    <TouchableOpacity onPress={() => navigation.navigate('Detail', {
+                        image: anime.images.jpg.image_url, 
+                        title: anime.title,
+                        synopsis: anime.synopsis}
+                    )}>
+                        <Image 
+                            style={styles.image}
+                            key={anime.mal_id}
+                            source={{uri: anime.images.jpg.image_url}}
+                        />
+                    </TouchableOpacity>
                 ))
             }
 
@@ -75,22 +80,18 @@ const Home = ({navigation}) => {
             <TouchableOpacity title='login' style={styles.button} onPress={() => dispatch(counterActions.decrement())}>
                     <Text style={{color:'white'}} >decrement</Text>
             </TouchableOpacity>
-            <TouchableOpacity title='login' style={styles.button} onPress={() => navigation.navigate('Details')}>
-                    <Text style={{color:'white'}} >go to details</Text>
+            <TouchableOpacity title='login' style={styles.button} onPress={() => navigation.navigate('Detail')}>
+                    <Text style={{color:'white'}} >go to detail</Text>
             </TouchableOpacity>
             <TouchableOpacity title='login' style={styles.button} onPress={handleLogout}>
                     <Text style={{color:'white'}} >logout</Text>
             </TouchableOpacity>
+            </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     button: {
         backgroundColor: '#4287f5',
         padding: 5,
