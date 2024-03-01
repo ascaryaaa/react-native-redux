@@ -6,6 +6,7 @@ import Home from './screens/Home';
 import { Provider } from 'react-redux';
 import store from './reducers';
 import Detail from './screens/Detail.jsx';
+import Counter from './reducers/counter.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,14 @@ export default function App() {
             component={Detail} 
             options={{
               title:'Detail',
+              headerTitleAlign: 'center'
+            }}
+          />
+          <Stack.Screen 
+            name="Counter" 
+            component={Counter} 
+            options={{
+              title:'Counter',
               headerTitleAlign: 'center'
             }}
           />

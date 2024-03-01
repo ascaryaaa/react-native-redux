@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Image, ActivityIndicator } from "react-native"
+import { View, StyleSheet, Text, Image, ActivityIndicator, ScrollView } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { getTopAnime } from "../reducers/anime"
 import { useState, useEffect } from "react"
@@ -17,18 +17,20 @@ const detail = ({route}) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.imagetitle}>
-                {/* <Text>{count}</Text> */}
+            <ScrollView>
+                <View style={styles.imagetitle}>
+                    {/* <Text>{count}</Text> */}
+                    <View style={styles.imagecontainer}>
+                        <Image style={styles.image} source={{uri: image}}/>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>{title}</Text>
+                    </View>
+                </View>
                 <View>
-                    <Image style={styles.image} source={{uri: image}}/>
+                    <Text style={styles.synopsis}>{synopsis}</Text>
                 </View>
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>{title}</Text>
-                </View>
-            </View>
-            <View>
-                <Text style={styles.synopsis}>{synopsis}</Text>
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -39,6 +41,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        paddingHorizontal: 20,
+        //backgroundColor: 'red',
     },
     image: {
         width: 200,
@@ -46,18 +50,25 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     imagetitle: {
+        width: '100%',
         flexDirection: 'row',
-        padding: 30,
+        paddingVertical: 20,
+        //backgroundColor: 'pink',
     },
     synopsis: {
-        paddingHorizontal: 20,
         textAlign: 'justify',
     },
     text: {
         fontWeight:'bold',
-        fontSize: 28,
+        fontSize: 20,
     },
     textContainer: {
-        padding: 20,
+        padding: 10,
+        alignItems: 'flex-start',
+        //backgroundColor:'green',
+        flex: 2,
+    },
+    imagecontainer: {
+        alignItems: 'flex-start'
     }
 })

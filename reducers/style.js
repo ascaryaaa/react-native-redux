@@ -7,9 +7,7 @@ const styleSlice = createSlice ({
         globalStyle: StyleSheet.create({
           container: {
             flex: 1,
-            backgroundColor: 'pink',
-            justifyContent: 'center',
-            alignItems: 'center'
+            flexWrap: 'wrap',
           }
         })
     },
