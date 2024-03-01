@@ -1,32 +1,37 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native"
 import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import counter from "../reducers/counter"
+import { counterActions } from "../reducers/counter"
 
 const Home = ({navigation}) => {
     const [animes, setAnimes] = useState([])
 
-    useEffect(() => {
-        AsyncStorage
-        .getItem('token') //check token existed
-        .then(token => {
-            if (token !== null) { //if token existed
-                return fetch('https://api.jikan.moe/v4/top/anime')
-            }
-            return Promise.reject('Not Authorize') //if token not existed
-        })
-        .then(response => response.json()) //convert response token
-        .then(res => setAnimes(res.data))
-    },[])
+    // useEffect(() => {
+    //     AsyncStorage
+    //     .getItem('token') //check token existed
+    //     .then(token => {
+    //         if (token !== null) { //if token existed
+    //             return fetch('https://api.jikan.moe/v4/top/anime')
+    //         }
+    //         return Promise.reject('Not Authorize') //if token not existed
+    //     })
+    //     .then(response => response.json()) //convert response token
+    //     .then(res => setAnimes(res.data))
+    // },[])
     
     const handleLogout = () => {
         AsyncStorage
         .removeItem('token')
         .then(() => navigation.navigate('Login'))
     }
+    const count = useSelector((state) => state.counter.count)
+    const dispatch = useDispatch()
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            {/* <ScrollView>
                 <View style={styles.listContainer}>
                 {animes?.map(anime => (
                     <Image
@@ -40,7 +45,20 @@ const Home = ({navigation}) => {
                     <Text style={{color:'white'}} >Logout</Text>
                 </TouchableOpacity>
                 </View>
-            </ScrollView>
+            </ScrollView> */}
+            <Text>{count}</Text>
+            <TouchableOpacity title='login' style={styles.button} onPress={() => dispatch(counterActions.increment())}>
+                    <Text style={{color:'white'}} >increment</Text>
+            </TouchableOpacity>
+            <TouchableOpacity title='login' style={styles.button} onPress={() => dispatch(counterActions.decrement())}>
+                    <Text style={{color:'white'}} >decrement</Text>
+            </TouchableOpacity>
+            <TouchableOpacity title='login' style={styles.button} onPress={() => navigation.navigate('Details')}>
+                    <Text style={{color:'white'}} >go to details</Text>
+            </TouchableOpacity>
+            <TouchableOpacity title='login' style={styles.button} onPress={handleLogout}>
+                    <Text style={{color:'white'}} >logout</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -56,7 +74,7 @@ const styles = StyleSheet.create({
         padding: 5,
         paddingHorizontal: 15,
         borderRadius: 5,
-        width: 100,
+        width: 120,
         alignItems: 'center',
         margin: 5,
     },

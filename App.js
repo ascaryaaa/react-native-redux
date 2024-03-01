@@ -1,35 +1,47 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './screens/Login.js';
 import Home from './screens/Home';
+import { Provider } from 'react-redux';
+import store from './reducers';
+import Details from './screens/Details.jsx';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name="Login" 
-          component={Login} 
-          options={{
-            title:'Login',
-            headerTitleAlign: 'center'
-          }}
-        />
-        <Stack.Screen 
-          name="Home" 
-          component={Home} 
-          options={{
-            title:'Home',
-            headerShown: false,
-            headerTitleAlign: 'center'
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="Login" 
+            component={Login} 
+            options={{
+              title:'Login',
+              headerTitleAlign: 'center'
+            }}
+          />
+          <Stack.Screen 
+            name="Home" 
+            component={Home} 
+            options={{
+              title:'Home',
+              headerShown: false,
+              headerTitleAlign: 'center'
+            }}
+          />
+          <Stack.Screen 
+            name="Details" 
+            component={Details} 
+            options={{
+              title:'Details',
+              headerTitleAlign: 'center'
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
