@@ -3,11 +3,14 @@ import { useEffect, useState } from "react"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_APP, FIREBASE_AUTH } from "../helpers/firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../reducers/auth";
 
 const Login = ({navigation}) => {
     const auth=FIREBASE_AUTH
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
 
     useEffect(() => {
         AsyncStorage
@@ -20,17 +23,22 @@ const Login = ({navigation}) => {
     }, [])
 
     const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password) //1. sign in user
-        .then(response => response.user.getIdToken()) //2. call user id token
-        .then(token => AsyncStorage.setItem('token', token) ) //3. store token
-        .then(() => {
-            Alert.alert('Login Succed', `Welcome!`, [
-                {
-                    text: 'Ok',
-                    onPress: () => navigation.navigate('Home')
-                }
-            ])
-        }) 
+        const payload = {
+            email: email,
+            password: password,
+        }
+        dispatch(signInUser(payload))
+        // signInWithEmailAndPassword(auth, email, password) //1. sign in user
+        // .then(response => response.user.getIdToken()) //2. call user id token
+        // .then(token => AsyncStorage.setItem('token', token) ) //3. store token
+        // .then(() => {
+        //     Alert.alert('Login Succed', `Welcome!`, [
+        //         {
+        //             text: 'Ok',
+        //             onPress: () => navigation.navigate('Home')
+        //         }
+        //     ])
+        // }) 
     }
 
     const handleRegister = async() => {
