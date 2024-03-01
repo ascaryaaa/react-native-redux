@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, isRejected } from "@reduxjs/toolkit"
 import { FIREBASE_AUTH } from "../helpers/firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { Alert} from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export const signInUser = createAsyncThunk(
     'sign-in-user', //make the redux can detect, must unique
@@ -11,6 +12,7 @@ export const signInUser = createAsyncThunk(
         try {
             const response = await signInWithEmailAndPassword(firebaseAuth, payload.email, payload.password)
             const token = await response.user.getIdToken()
+            AsyncStorage.setItem("token",token)
             return thunkApi.fulfillWithValue(token)
         } catch (error) {
             return thunkApi.rejectWithValue(error.message)

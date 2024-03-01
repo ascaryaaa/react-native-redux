@@ -22,16 +22,6 @@ const Login = ({navigation}) => {
             }
         })
     }, [])
-    useEffect(()=>{
-        if(authState.token !== null){
-            Alert.alert('Login Success', 'Welcome user',[
-                {
-                    text: 'ok',
-                    onPress: () => navigation.navigate('Home')
-                }
-            ])
-        }
-    }, [authState.token])
 
     const handleLogin = () => {
         const payload = {
@@ -39,6 +29,16 @@ const Login = ({navigation}) => {
             password: password,
         }
         dispatch(signInUser(payload))
+        .unwrap() //return promise if actin is async thunk action
+        .then(() => {
+            Alert.alert('Login Success', 'Welcome user',[
+                {
+                    text: 'ok',
+                    onPress: () => navigation.navigate('Home')
+                }
+            ])
+        })
+
         // signInWithEmailAndPassword(auth, email, password) //1. sign in user
         // .then(response => response.user.getIdToken()) //2. call user id token
         // .then(token => AsyncStorage.setItem('token', token) ) //3. store token
