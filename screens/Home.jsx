@@ -1,9 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from "react-native"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import counter from "../reducers/counter"
 import { counterActions } from "../reducers/counter"
+import { getTopAnime } from "../reducers/anime"
 
 const Home = ({navigation}) => {
     const [animes, setAnimes] = useState([])
@@ -28,7 +29,14 @@ const Home = ({navigation}) => {
     }
     const count = useSelector((state) => state.counter.count)
     const globalStyle = useSelector((state) => state.style.globalStyle)
+    const anime = useSelector((state) => state.anime)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getTopAnime())
+    }, [dispatch])
+
+    useEffect(() => { console.log(anime.data.length)}, [anime])
 
     return (
         <View style={globalStyle.container}>
@@ -47,6 +55,19 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
                 </View>
             </ScrollView> */}
+            {
+                anime.loading 
+                ? <ActivityIndicator/>
+                : anime?.data.map(anime => (
+                    <Image 
+                        style={styles.image}
+                        key={anime.mal_id}
+                        source={{uri: anime.images.jpg.image_url}}
+                    />
+                ))
+            }
+
+
             <Text>{count}</Text>
             <TouchableOpacity title='login' style={styles.button} onPress={() => dispatch(counterActions.increment())}>
                     <Text style={{color:'white'}} >increment</Text>
