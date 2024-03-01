@@ -1,15 +1,16 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native"
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ActivityIndicator } from "react-native"
 import { useEffect, useState } from "react"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_APP, FIREBASE_AUTH } from "../helpers/firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../reducers/auth";
 
 const Login = ({navigation}) => {
     const auth=FIREBASE_AUTH
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const authState = useSelector((state) => state.auth)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -21,6 +22,16 @@ const Login = ({navigation}) => {
             }
         })
     }, [])
+    useEffect(()=>{
+        if(authState.token !== null){
+            Alert.alert('Login Success', 'Welcome user',[
+                {
+                    text: 'ok',
+                    onPress: () => navigation.navigate('Home')
+                }
+            ])
+        }
+    }, [authState.token])
 
     const handleLogin = () => {
         const payload = {
@@ -54,6 +65,7 @@ const Login = ({navigation}) => {
 
     return (
         <View style={styles.container}>
+            {authState.loading ? <ActivityIndicator/> : ''}
             <TextInput 
                 style={styles.input} 
                 placeholder="email"
