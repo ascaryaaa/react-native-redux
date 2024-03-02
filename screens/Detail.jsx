@@ -25,13 +25,13 @@ const detail = ({route}) => {
                         <Image style={styles.image} source={{uri: image}}/>
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.text}>{title}</Text>
-                        <Text style={styles.text}>t{animeState?.title}t</Text>
+                        {/* <Text style={styles.text}>{title}</Text> */}
+                        <Text style={styles.text}>{animeState?.detail?.data.title}</Text>
                     </View>
                 </View>
                 <View>
-                    <Text style={styles.synopsis}>{synopsis}</Text>
-                    <Text style={styles.synopsis}>s{animeState?.synopsis}s</Text>
+                    {/* <Text style={styles.synopsis}>{synopsis}</Text> */}
+                    <Text style={styles.synopsis}>{animeState?.detail?.data.synopsis}</Text>
                 </View>
             </ScrollView>
         </View>
