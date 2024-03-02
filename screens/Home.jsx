@@ -33,6 +33,7 @@ const Home = ({navigation}) => {
                     ? <ActivityIndicator/>
                     : animeState?.data?.map(anime => (
                         <TouchableOpacity style={styles.imagecontainer} onPress={() => navigation.navigate('Detail', {
+                            id: anime.mal_id,
                             image: anime.images.jpg.image_url, 
                             title: anime.title,
                             synopsis: anime.synopsis}

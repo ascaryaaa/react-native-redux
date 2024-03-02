@@ -18,10 +18,24 @@ export const getTopAnime = createAsyncThunk(
     }
 )
 
+//https://api.jikan.moe/v4/anime/{id}/full
+export const getAnimeDetail = createAsyncThunk(
+    "get-anime-detail",
+    async (payload, thunkApi) => {
+      try {
+        const response = await axios.get(`https://api.jikan.moe/v4/anime/${payload}`);
+        return thunkApi.fulfillWithValue(response.data);
+      } catch (error) {
+        return thunkApi.rejectWithValue(error.message);
+      }
+    }
+  );
+
 const animeSlice = createSlice({
     name: 'anime',
     initialState: {
         data: [],
+        detail: null,
         loading: false,
     },
     reducer: {},
@@ -33,8 +47,22 @@ const animeSlice = createSlice({
             state.data = action.payload
             state.loading = false
         })
+        builder.addCase(getTopAnime.rejected, (state, action) => {
+            Alert.alert(action.payload);
+            state.loading = false;
+        })
+        builder.addCase(getAnimeDetail.fulfilled, (state, action) => {
+            state.detail = action.payload;
+            state.loading = false;
+        })
+        builder.addCase(getAnimeDetail.rejected, (state, action) => {
+            Alert.alert(action.payload);
+            state.loading = false;
+        })
+        builder.addCase(getAnimeDetail.pending, (state, action) => {
+            state.loading = true;
+        })
     }
-
 })
 
 const animeReducer = animeSlice.reducer

@@ -1,18 +1,19 @@
 import { View, StyleSheet, Text, Image, ActivityIndicator, ScrollView } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import { getTopAnime } from "../reducers/anime"
+import { getAnimeDetail } from "../reducers/anime"
 import { useState, useEffect } from "react"
 
 const detail = ({route}) => {
+    const id = route.params.id
     const title = route.params.title
     const synopsis = route.params.synopsis
     const image = route.params.image
-    const count = useSelector((state) => state.counter.count)
+    // const count = useSelector((state) => state.counter.count)
     const dispatch = useDispatch()
     const animeState = useSelector((state) => state.anime)
 
     useEffect(() => {
-        dispatch(getTopAnime())
+        dispatch(getAnimeDetail(id));
     }, [dispatch])
 
     return (
@@ -25,10 +26,12 @@ const detail = ({route}) => {
                     </View>
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>{title}</Text>
+                        <Text style={styles.text}>t{animeState?.title}t</Text>
                     </View>
                 </View>
                 <View>
                     <Text style={styles.synopsis}>{synopsis}</Text>
+                    <Text style={styles.synopsis}>s{animeState?.synopsis}s</Text>
                 </View>
             </ScrollView>
         </View>
