@@ -1,25 +1,28 @@
 # Run the application
 1. Install Node
+
 To check the version
 ```
 node -v
 ```
 2. Install NPM
+
 Install using
 ```
 npm install -g npm
 ```
+
 To check the version
 ```
 npm -v
 ```
 3. Install expo on phone
-3. Run Expo on console
+4. Run Expo on console
 Go to the project directory and run:
 ```
 npx expo start
 ```
-4. Connect
+5. Connect
 Scan barcode or input the number in console to the phone 
 
 # Redux
