@@ -10,7 +10,7 @@ const detail = ({route}) => {
     const image = route.params.image
     // const count = useSelector((state) => state.counter.count)
     const dispatch = useDispatch()
-    const animeState = useSelector((state) => state.anime)
+    const animeState = useSelector((state) => state.anime.detail?.data)
 
     useEffect(() => {
         dispatch(getAnimeDetail(id));
@@ -26,12 +26,12 @@ const detail = ({route}) => {
                     </View>
                     <View style={styles.textContainer}>
                         {/* <Text style={styles.text}>{title}</Text> */}
-                        <Text style={styles.text}>{animeState?.detail?.data.title}</Text>
+                        <Text style={styles.text}>{animeState?.title}</Text>
                     </View>
                 </View>
                 <View>
                     {/* <Text style={styles.synopsis}>{synopsis}</Text> */}
-                    <Text style={styles.synopsis}>{animeState?.detail?.data.synopsis}</Text>
+                    <Text style={styles.synopsis}>{animeState?.synopsis}</Text>
                 </View>
             </ScrollView>
         </View>
