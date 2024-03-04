@@ -21,9 +21,10 @@ export const getTopAnime = createAsyncThunk(
 //https://api.jikan.moe/v4/anime/{id}/full
 export const getAnimeDetail = createAsyncThunk(
     "get-anime-detail",
-    async (payload, thunkApi) => {
+    async (id, thunkApi) => {
       try {
-        const response = await axios.get(`https://api.jikan.moe/v4/anime/${payload}`);
+        const response = await axios.get("https://api.jikan.moe/v4/anime/"+id);
+
         return thunkApi.fulfillWithValue(response.data);
       } catch (error) {
         return thunkApi.rejectWithValue(error.message);
