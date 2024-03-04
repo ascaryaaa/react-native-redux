@@ -2,8 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from "react-native"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import counter from "../reducers/counter"
-import { counterActions } from "../reducers/counter"
+//import counter from "../reducers/counter"
+//import { counterActions } from "../reducers/counter"
 import { getTopAnime } from "../reducers/anime"
 
 const Home = ({navigation}) => {    

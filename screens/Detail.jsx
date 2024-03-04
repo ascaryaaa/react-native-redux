@@ -5,9 +5,9 @@ import { useState, useEffect } from "react"
 
 const detail = ({route}) => {
     const id = route.params.id
-    const title = route.params.title
-    const synopsis = route.params.synopsis
-    const image = route.params.image
+    //const title = route.params.title
+    //const synopsis = route.params.synopsis
+    //const image = route.params.image
     // const count = useSelector((state) => state.counter.count)
     const dispatch = useDispatch()
     const animeState = useSelector((state) => state.anime.detail?.data)
